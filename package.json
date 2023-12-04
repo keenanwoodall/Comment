@@ -1,0 +1,17 @@
+{
+  "name": "com.beans.comments",
+  "displayName": "Comments",
+  "description": "Add comments to stuff!",
+  "version": "0.0.0",
+  "unity": "2019.3",
+  "type": "library",
+  "keywords": [
+    "comments",
+    "tools"
+  ],
+  "author": {
+    "name": "Keenan Woodall",
+    "email": "keenanwoodall@gmail.com",
+    "url": "https://github.com/keenanwoodall/Comment"
+  }
+}

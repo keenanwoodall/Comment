@@ -1,0 +1,18 @@
+{
+    "name": "Comments.Editor",
+    "rootNamespace": "Comments.Editor",
+    "references": [
+        "GUID:7b51f75a7d75be944a6d7445fa5a44a6"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
