@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Xml;
-using System.Xml.Linq;
 using Antlr4.Runtime;
 
 namespace Comments.Editor
@@ -19,17 +18,20 @@ namespace Comments.Editor
         {
             _fieldName = fieldName;
             _tokenStream = tokenStream;
-            PlainComment = "";
+            PlainComment = string.Empty;
             XmlComment = new XmlDocument();
         }
 
         private string CleanComment(string comment)
         {
-            string[] lines = comment.Split(new[] { '\n', '\r' }, System.StringSplitOptions.None);
+            var lineSeparator = new[] { '\n', '\r' };
+            var trimChars = new[] { '\n', '\r', ' ', '*', '/' };
+            
+            var lines = comment.Split(lineSeparator, System.StringSplitOptions.None);
             for (int i = 0; i < lines.Length; i++)
             {
-                var line = lines[i]; ;
-                line = line.TrimStart('\n', '\r', ' ', '*', '/');
+                var line = lines[i];
+                line = line.TrimStart(trimChars);
                 lines[i] = line;
             }
             
@@ -40,19 +42,21 @@ namespace Comments.Editor
         {
             PlainComment = CleanComment(PlainComment);
 
-            if (PlainComment.StartsWith('<') && PlainComment.EndsWith('>'))
+            if (!PlainComment.StartsWith('<') || !PlainComment.EndsWith('>')) 
+                return;
+            
+            try
             {
-                try
-                {
-                    XmlComment.LoadXml("<root>" + PlainComment + "</root>");
-                }
-                catch (XmlException)
-                {
-                }
-                
-                if (XmlComment.HasChildNodes)
-                    PlainComment = null;
+                XmlComment.LoadXml("<root>" + PlainComment + "</root>");
             }
+            catch (XmlException)
+            {
+            }
+
+            if (XmlComment.HasChildNodes)
+                PlainComment = null;
+            else
+                XmlComment = null;
         }
 
         public override void EnterField_declaration(CSharpParser.Field_declarationContext context)
@@ -80,9 +84,9 @@ namespace Comments.Editor
                         CSharpLexer.DELIMITED_COMMENT or 
                         CSharpLexer.SINGLE_LINE_DOC_COMMENT or 
                         CSharpLexer.EMPTY_DELIMITED_DOC_COMMENT
-                       )
+                        )
                     {
-                        PlainComment = PlainComment.Insert(0, token.Text + "\n");
+                        PlainComment = PlainComment.Insert(0, $"{token.Text}\n");
                         CommentFound = true;
                     }
                     else if (token.Type is not CSharpLexer.WHITESPACES && CommentFound)

@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Object = System.Object;
@@ -29,13 +28,13 @@ namespace Comments.Editor
 
                 var hoverRect = label.worldBound;
                 
-                if (SerializedProperty.HasComment(script, out var comment))
+                if (SerializedProperty.TryGetNicifiedComment(script, out var comment))
                 {
                     CommentTooltipPopup.ShowFor(hoverRect, new GUIContent(comment));
                 }
                 else
                 {
-                    CommentTooltipPopup.ShowFor(hoverRect, new GUIContent("<Tooltip Missing: No comment found above this field>"));
+                    CommentTooltipPopup.ShowFor(hoverRect, new GUIContent("Tooltip Missing: No comment found above this field"));
                 }
             });
 

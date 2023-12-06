@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Linq;
 using System.Xml;
-using System.Xml.XPath;
+using System.Linq;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 using UnityEditor;
-using UnityEngine;
 
 namespace Comments.Editor
 {
-    public static class SerializedPropertyx
+    public static class CommentUtility
     {
-        public static bool HasComment(this SerializedProperty property, MonoScript script, out string comment)
+        public static bool TryGetNicifiedComment(this SerializedProperty property, MonoScript script, out string comment)
         {
             comment = null;
             
@@ -37,18 +35,19 @@ namespace Comments.Editor
                     {
                         Traverse(node, (currentNode, depth) =>
                         {
-                            var indent = "  ";
-                            var indentLevel = string.Concat(Enumerable.Repeat(indent, depth));
+                            var indent = "   ";
                             if (currentNode.HasChildNodes)
                             {
+                                var indentLevel = string.Concat(Enumerable.Repeat(indent, depth));
                                 var nicifiedName = ObjectNames.NicifyVariableName(currentNode.Name);
                                 var indentedName = $"{indentLevel}<b>{nicifiedName.Replace("\n", $"\n{indentLevel}{indent}")}</b>\n";
                                 nicifiedComment += indentedName;
                             }
                             else
                             {
+                                var indentLevel = string.Concat(Enumerable.Repeat(indent, depth - 1));
                                 nicifiedComment +=
-                                    $"{indentLevel}{indent}{currentNode.InnerText.Trim().Replace("\n", $"\n{indentLevel}{indent}")}\n";
+                                    $"{indentLevel}{currentNode.InnerText.Trim().Replace("\n", $"\n{indentLevel}{indent}")}\n\n";
                             }
                         });   
                     }

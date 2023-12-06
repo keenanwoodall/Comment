@@ -28,10 +28,9 @@ public abstract class ModifierDrawer : DecoratorDrawer
             EditorApplication.delayCall += () =>
             {
                 var decoratorContainer = visualElement.parent;
-                PropertyField = (PropertyField)decoratorContainer.parent;
-                InspectorElement = PropertyField.parent.parent;
+                PropertyField = decoratorContainer.GetFirstAncestorOfType<PropertyField>();
+                InspectorElement = decoratorContainer.GetFirstAncestorWithClass("unity-inspector-element");//PropertyField.parent.parent;
 
-                
                 var soFieldInfo = Reflectionx.Field(InspectorElement.GetType(), "m_BoundObject");
                 if (soFieldInfo != null)
                 {
