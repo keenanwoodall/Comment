@@ -32,14 +32,6 @@ namespace Comments.Editor
 				EditableMessageStyle.hover.textColor		= 
 				EditableMessageStyle.active.textColor		= 
 				EditableMessageStyle.focused.textColor		= MessageColor;
-
-				// custom background texture breaks on 4k monitor...huh!?
-				// var background = AssetDatabase.LoadAssetAtPath<Texture2D>("Packages/com.absurdjoy.comments/Editor/CommentBackground.png");
-				//
-				// EditableMessageStyle.normal.background		= 
-				// EditableMessageStyle.hover.background		=
-				// EditableMessageStyle.active.background		=
-				// EditableMessageStyle.focused.background		= background;
 			}
 
 			serializedObject.UpdateIfRequiredOrScript();
