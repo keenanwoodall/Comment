@@ -31,20 +31,20 @@ public class SimpleExampleScript : MonoBehaviour
 - Comment discovery is greedy(?) The `[Comment]` attribute will always display the first comment block above the field in question, even if there's other fields in between.
 
 ```cs
+// This is a comment
+[Comment] public float field1;
+[Comment] public float field2;
+
+// ^ both fields will have the same tooltip
+```
+
+- Comments are only found in the inspected MonoScript. This means comments on fields in nested classes are not displayed since their file is unknown.
+
+```cs
 [System.Serializable]
 struct CustomStruct
 {
     // This is a nested field tooltip, which doesn't work
     [Comment] public float nestedField;
 }
-```
-
-- Comments are only found in the inspected MonoScript. This means comments on fields in nested classes are not displayed since their file is unknown.
-
-```cs
-// This is a comment
-[Comment] public float field1;
-[Comment] public float field2;
-
-// ^ both fields will have the same tooltip
 ```
