@@ -37,14 +37,3 @@ public class SimpleExampleScript : MonoBehaviour
 
 // ^ both fields will have the same tooltip
 ```
-
-- Comments are only found in the inspected MonoScript. This means comments on fields in nested classes are not displayed since their file is unknown.
-
-```cs
-[System.Serializable]
-struct CustomStruct
-{
-    // This is a nested field tooltip, which doesn't work
-    [Comment] public float nestedField;
-}
-```
