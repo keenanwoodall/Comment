@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Comments.Editor
 {
+    // see TooltipView.cs in Unity source to see how the vanilla popup works.
     public class CommentTooltipPopup : EditorWindow
     {
         private static GUIContent _Content;
@@ -72,9 +73,16 @@ namespace Comments.Editor
             _Instance = null;
             _RevealIsPending = false;
         }
+
+        private GUIStyle _textStyle;
         
         private void OnEnable()
         {
+            _textStyle = new GUIStyle(EditorStyles.wordWrappedLabel)
+            {
+                richText = true
+            };
+
             ShowPopup();
         }
 
@@ -98,7 +106,7 @@ namespace Comments.Editor
             GUI.DrawTexture(rightRect, EditorGUIUtility.whiteTexture, ScaleMode.StretchToFill);
 
             GUI.color = Color.white;
-            EditorGUILayout.LabelField(_Content, EditorStyles.wordWrappedLabel);
+            EditorGUILayout.LabelField(_Content, _textStyle);
         }
     }
 }
