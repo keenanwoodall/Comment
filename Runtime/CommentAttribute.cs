@@ -1,8 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Runtime.CompilerServices;
+using UnityEngine;
 
 public class CommentAttribute : PropertyAttribute
 {
-    public CommentAttribute()
+    public readonly string SourceFilePath;
+    
+    public CommentAttribute([CallerFilePath] string callerFilePath = null)
     {
+        SourceFilePath = callerFilePath;
     }
 }
