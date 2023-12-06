@@ -9,11 +9,11 @@ namespace Comments.Editor
 {
     public static class CommentUtility
     {
-        public static bool TryGetNicifiedComment(this SerializedProperty property, MonoScript script, out string comment)
+        public static bool TryGetNicifiedComment(this SerializedProperty property, string source, out string comment)
         {
             comment = null;
             
-            var inputStream = new AntlrInputStream(script.text);
+            var inputStream = new AntlrInputStream(source);
             var lexer = new CSharpLexer(inputStream);
             var tokenStream = new CommonTokenStream(lexer);
             var parser = new CSharpParser(tokenStream);
@@ -52,7 +52,7 @@ namespace Comments.Editor
                         });   
                     }
                     
-                    comment = nicifiedComment.Trim();
+                    comment = nicifiedComment.Trim(' ', '\r', '\n');
                 }
             }
             

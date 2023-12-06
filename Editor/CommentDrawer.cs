@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System.IO;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Object = System.Object;
@@ -18,17 +19,14 @@ namespace Comments.Editor
             
             label.RegisterCallback<PointerEnterEvent>(enterEvt =>
             {
-                MonoScript script = null;
                 Object target = SerializedObject.targetObject;
 
-                if (target is MonoBehaviour mb)
-                    script = MonoScript.FromMonoBehaviour(mb);
-                else if (target is ScriptableObject so)
-                    script = MonoScript.FromScriptableObject(so);
+                var commentAttribute = (CommentAttribute)attribute;
+                var source = File.ReadAllText(commentAttribute.SourceFilePath);
 
                 var hoverRect = label.worldBound;
                 
-                if (SerializedProperty.TryGetNicifiedComment(script, out var comment))
+                if (SerializedProperty.TryGetNicifiedComment(source, out var comment))
                 {
                     CommentTooltipPopup.ShowFor(hoverRect, new GUIContent(comment));
                 }
