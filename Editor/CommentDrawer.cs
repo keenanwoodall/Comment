@@ -34,7 +34,7 @@ namespace Comments.Editor
                 }
                 else
                 {
-                    CommentTooltipPopup.ShowFor(hoverRect, new GUIContent("Tooltip Missing: No comment found above this field"));
+                    CommentTooltipPopup.ShowFor(hoverRect, new GUIContent($"Tooltip Missing: No comment found for this field in {target.GetType().FullName}"));
                 }
             });
 
